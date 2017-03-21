@@ -1,0 +1,28 @@
+{
+    "devtools_port": 9090,
+    "startup_app": {
+        "name": "node-integration-example-web",
+        "url": "http://localhost:5000/index.html",
+        "uuid": "node-integration-example-web",
+        "applicationIcon": "http://localhost:5000/favicon.ico",
+        "autoShow": true
+    },
+    "runtime": {
+        "arguments": "",
+        "version": "beta"
+    },
+    "shortcut": {
+        "company": "OpenFin",
+        "description": "node-integration-example",
+        "icon": "http://localhost:5000/favicon.ico",
+        "name": "node-integration-example"
+    },
+    "appAssets": [
+        {
+            "src": "http://localhost:5000/service.zip",
+            "version": "0.2.0",
+            "alias": "node-service",
+            "target": "node_6.5.0.exe"
+        }
+    ]
+}

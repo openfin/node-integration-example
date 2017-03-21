@@ -1,0 +1,20 @@
+{
+    "name": "node-integration-example",
+    "version": "0.0.0",
+    "scripts": {
+        "start": "grunt serve",
+        "postinstall": "bower install && cd node-service && npm install && cd .."
+    },
+    "devDependencies": {
+        "@types/openfin": "^16.0.1",
+        "grunt-contrib-watch": "~1.0.0",
+        "grunt": "~1.0.1",
+        "connect-livereload": "~0.6.0",
+        "grunt-contrib-connect": "~1.0.2",
+        "grunt-cli": "~1.2.0",
+        "grunt-openfin": ">=1.0.2",
+        "grunt-contrib-compress": "1.3.0",
+        "grunt-contrib-clean": "1.0.0"
+    },
+    "description": "node-integration-example"
+}
