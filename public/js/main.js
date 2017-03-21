@@ -4,32 +4,47 @@ const toWebTopic = 'to-web-topic';
 const toServiceTopic = 'to-service-topic';
 //The identity of the Node Service.
 const serviceUuid = 'node-integration-example-service';
+//the asset alias for the node service (found in the app.json)
+const nodeServiceAlias = 'node-service';
 
+//retreives the port for the current OpenFin process
+function getPort() {
+    return new Promise((resolve, reject) => {
+        chrome.desktop.getDetails(d => resolve(d.port));
+    });
+}
+
+//launches the node-service
+function launchNodeService(port) {
+    return new Promise((resolve, reject) => {
+        fin.desktop.System.launchExternalProcess({
+            alias: nodeServiceAlias,
+            arguments: 'index.js --port ' + port,
+            lifetime: 'window'
+        }, payload => resolve(payload)
+        , (reason, error) => reject(error));
+    });
+}
+
+//once the dom has loaded
 document.addEventListener('DOMContentLoaded', function() {
     const messageCtrl = document.querySelector('#message');
     const timeStampCtrl = document.querySelector('#time');
 
+    //subscribe to messages from the node service
     fin.desktop.InterApplicationBus.subscribe(serviceUuid, toWebTopic, function(msg, uuid) {
         messageCtrl.innerText = `Received ${msg.data} from ${uuid}`;
         timeStampCtrl.innerText = new Date(msg.timeStamp).toLocaleTimeString();
     });
 
-    fin.desktop.System.launchExternalProcess({
-        alias: 'node-service',
-        arguments: 'index.js --port 9696',
-        lifetime: 'window',
-        listener: function (result) {
-            console.log('the exit code', result.exitCode);
-        }
-    }, function (payload) {
-        console.log('Success:', payload.uuid);
-    }, function (reason, error) {
-        console.log('Error:', error);
-    });
+    //launch the node service.
+    getPort()
+    .then(port => launchNodeService(port))
+    .then(() => console.log('node service is running'))
+    .catch(err => console.log(err));
 
-    //We just want to send messages at an interval
+    //send messages every second.
     setInterval(() => {
-        console.log('I am here bro');
         fin.desktop.InterApplicationBus.send(serviceUuid, toServiceTopic, {
             data: 'Hello Service',
             timeStamp: Date.now()

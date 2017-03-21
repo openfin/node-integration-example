@@ -6,3 +6,4 @@ bower_components
 logs
 OpenFinRVM.exe
 node-service/node_modules
+public/service.zip
