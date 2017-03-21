@@ -7,6 +7,7 @@ $   npm start
 ```
 
 This project consists of 2 parts:
+
 1. An OpenFin application
 2. A Node service application (for process launching & interapp communication)
 
