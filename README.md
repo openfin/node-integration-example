@@ -2,7 +2,7 @@
 
 This is a simple example that shows NodeJS to OpenFin integration. We co-deploy a NodeJS service with our OpenFin application (see the [app.json](public/app,json) file for specifics) and use the Inter Application Bus on both side to demonstrate connectivity.
 
-## Getting started:
+## Running the example
 
 `npm install && npm start`
 
@@ -42,7 +42,7 @@ setInterval(() => {
 }, 1000);
 ```
 
-#### OpenFin side: [main.js](public/main.js):
+#### OpenFin side: [main.js](public/main.js)
 ```javascript
 fin.desktop.InterApplicationBus.subscribe(serviceUuid, toWebTopic, function(msg, uuid) {
     messageCtrl.innerText = `Received ${msg.data} from ${uuid}`;
