@@ -1,6 +1,6 @@
 # node-integration-example
 
-This is a simple example that shows NodeJS to OpenFin integration. We co-deploy a NodeJS service with our OpenFin application (see the [app.json](https://github.com/openfin/node-integration-example/blob/master/public/app.json) file for specifics) and use the Inter Application Bus on both side to demonstrate connectivity.
+This is a simple example that shows NodeJS to OpenFin integration. We co-deploy a NodeJS service with our OpenFin application (see the [app.json](public/app.json) file for specifics) and use the Inter Application Bus on both side to demonstrate connectivity.
 
 ## Running the example
 
@@ -22,7 +22,7 @@ fin.desktop.System.launchExternalProcess({
 , (reason, error) => reject(error));
 ``` 
 
-See the [Gruntfile](https://github.com/openfin/node-integration-example/blob/master/gruntfile.js) for specifics.
+See the [Gruntfile](gruntfile.js) for specifics.
 
 ## Inter Application bus
 
