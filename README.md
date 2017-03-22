@@ -7,9 +7,11 @@ This is a simple example that shows NodeJS to OpenFin integration. We co-deploy 
 `npm install && npm start`
 
 ## What is happening ?
-On an `npm start` command the "node-service" folder will be zipped up and moved to the public folder, simulating a remote web server `grunt:connect` will serve the public folder and the OpenFin `grunt:openfin` plugin will launch the node-integration-example application from public/app.json. see the [Gruntfile](https://github.com/openfin/node-integration-example/blob/master/gruntfile.js) for specifics.
+1. On `npm start` the "node-service" folder will be zipped up and moved to the public folder.
+2. Simulating a remote web server, `grunt:connect` will serve the public folder
+3. The OpenFin `grunt:openfin` plugin ([github](https://github.com/openfin/grunt-openfin)) will launch the node-integration-example application from public/app.json. 
 
-On a successfull launch, the contents of the "node-service" folder will be deployed onto OpenFin and launched by `main.js`: 
+On a successfull launch, the contents of the "node-service" folder will be deployed onto OpenFin and launched by [main.js](public/js/main.js): 
 
 ```javascript
 fin.desktop.System.launchExternalProcess({
@@ -19,6 +21,8 @@ fin.desktop.System.launchExternalProcess({
 }, payload => resolve(payload)
 , (reason, error) => reject(error));
 ``` 
+
+See the [Gruntfile](https://github.com/openfin/node-integration-example/blob/master/gruntfile.js) for specifics.
 
 ## Inter Application bus
 
