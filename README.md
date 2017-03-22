@@ -1,15 +1,17 @@
 # node-integration-example
 
-This is a simple example that shows NodeJS to OpenFin integration. We co-deploy a NodeJS service with our OpenFin application (see the [app.json](public/app,json) file for specifics) and use the Inter Application Bus on both side to demonstrate connectivity.
+This is a simple example that shows NodeJS to OpenFin integration. We co-deploy a NodeJS service with our OpenFin application (see the [app.json](public/app.json) file for specifics) and use the Inter Application Bus on both side to demonstrate connectivity.
 
 ## Running the example
 
 `npm install && npm start`
 
 ## What is happening ?
-On an `npm start` command the "node-service" folder will be zipped up and moved to the public folder, simulating a remote web server `grunt:connect` will serve the public folder and the OpenFin `grunt:openfin` plugin will launch the node-integration-example application from public/app.json. see the [Gruntfile](Gruntfile.js) for specifics.
+1. On `npm start` the "node-service" folder will be zipped up and moved to the public folder.
+2. Simulating a remote web server, `grunt:connect` will serve the public folder
+3. The OpenFin `grunt:openfin` plugin ([github](https://github.com/openfin/grunt-openfin)) will launch the node-integration-example application from public/app.json. 
 
-On a successfull launch, the contents of the "node-service" folder will be deployed onto OpenFin and launched by `main.js`: 
+On a successfull launch, the contents of the "node-service" folder will be deployed onto OpenFin and launched by [main.js](public/js/main.js): 
 
 ```javascript
 fin.desktop.System.launchExternalProcess({
@@ -19,6 +21,8 @@ fin.desktop.System.launchExternalProcess({
 }, payload => resolve(payload)
 , (reason, error) => reject(error));
 ``` 
+
+See the [Gruntfile](gruntfile.js) for specifics.
 
 ## Inter Application bus
 
@@ -42,7 +46,7 @@ setInterval(() => {
 }, 1000);
 ```
 
-#### OpenFin side: [main.js](public/main.js)
+#### OpenFin side: [main.js](public/js/main.js)
 ```javascript
 fin.desktop.InterApplicationBus.subscribe(serviceUuid, toWebTopic, function(msg, uuid) {
     messageCtrl.innerText = `Received ${msg.data} from ${uuid}`;
