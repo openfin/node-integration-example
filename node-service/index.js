@@ -1,4 +1,4 @@
-const connect = require('js-adapter').connect;
+const { connect } = require('node-adapter');
 
 //get the OpenFin port as a argument.
 const port = process.argv[process.argv.indexOf('--port') + 1];
@@ -16,9 +16,17 @@ const connectionOptions = {
     uuid: 'node-integration-example-service',
     nonPersistant: true
 };
+let fin;
 
-//connect to the OpenFin runtime.
-connect(connectionOptions).then(fin => {
+function sendIABMessage() {
+    fin.InterApplicationBus.send(webAppIdentity, toWebTopic, {
+        data: 'Hello web',
+        timeStamp: Date.now()
+    });
+}
+
+function onConnected(f) {
+    fin = f;
 
     //use the inter application bus.
     fin.InterApplicationBus.subscribe(webAppIdentity, toServiceTopic, (msg, senderIdentity) => {
@@ -28,10 +36,8 @@ connect(connectionOptions).then(fin => {
     }).catch(err => console.log(err));
 
     //send messages every second.
-    setInterval(() => {
-        fin.InterApplicationBus.send(webAppIdentity, toWebTopic, {
-            data: 'Hello web',
-            timeStamp: Date.now()
-        });
-    }, 1000);
-}).catch(err => console.log(err));
+    setInterval(sendIABMessage, 1000);
+}
+
+//connect to the OpenFin runtime.
+connect(connectionOptions).then(onConnected).catch(err => console.log(err));

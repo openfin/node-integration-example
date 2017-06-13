@@ -22,6 +22,21 @@ fin.desktop.System.launchExternalProcess({
 , (reason, error) => reject(error));
 ``` 
 
+The "node-service" will use the [node-adapter](https://github.com/HadoukenIO/node-adapter) to connect to the OpenFin Bus in [index.js](node-service/index.js):
+
+```javascript
+const { connect } = require('node-adapter');
+const connectOptions = {
+    address: `ws://localhost:${port}`,
+    uuid: 'node-integration-example-service',
+    nonPersistant: true
+};
+
+connect(connectOptions).then(onConnected);
+
+```
+
+
 See the [Gruntfile](gruntfile.js) for specifics.
 
 ## Inter Application bus

@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "js-adapter": "github:openfin/js-adapter#develop"
+    "node-adapter": "github:hadoukenio/node-adapter"
   }
 }

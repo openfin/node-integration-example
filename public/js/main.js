@@ -21,33 +21,37 @@ function launchNodeService(port) {
             alias: nodeServiceAlias,
             arguments: 'index.js --port ' + port,
             lifetime: 'window'
-        }, payload => resolve(payload)
+        }, resolve
         , (reason, error) => reject(error));
     });
 }
 
-//once the dom has loaded
-document.addEventListener('DOMContentLoaded', function() {
+function sendIABMessage() {
+    fin.desktop.InterApplicationBus.send(serviceUuid, toServiceTopic, {
+        data: 'Hello Service',
+        timeStamp: Date.now()
+    });
+}
+
+function onFinReady() {
     const messageCtrl = document.querySelector('#message');
     const timeStampCtrl = document.querySelector('#time');
 
     //subscribe to messages from the node service
-    fin.desktop.InterApplicationBus.subscribe(serviceUuid, toWebTopic, function(msg, uuid) {
+    fin.desktop.InterApplicationBus.subscribe(serviceUuid, toWebTopic, (msg, uuid) => {
         messageCtrl.innerText = `Received ${msg.data} from ${uuid}`;
         timeStampCtrl.innerText = new Date(msg.timeStamp).toLocaleTimeString();
     });
 
     //launch the node service.
     getPort()
-    .then(port => launchNodeService(port))
+    .then(launchNodeService)
     .then(() => console.log('node service is running'))
     .catch(err => console.log(err));
 
     //send messages every second.
-    setInterval(() => {
-        fin.desktop.InterApplicationBus.send(serviceUuid, toServiceTopic, {
-            data: 'Hello Service',
-            timeStamp: Date.now()
-        });
-    }, 1000);
-});
+    setInterval(sendIABMessage, 1000);
+}
+
+//Once OpenFin is ready.
+fin.desktop.main(onFinReady);
