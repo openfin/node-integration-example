@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-adapter": "github:hadoukenio/node-adapter"
+    "hadouken-js-adapter": "0.1.2"
   }
 }

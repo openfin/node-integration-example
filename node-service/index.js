@@ -1,4 +1,4 @@
-const { connect } = require('node-adapter');
+const { connect } = require('hadouken-js-adapter');
 
 //get the OpenFin port as a argument.
 const port = process.argv[process.argv.indexOf('--port') + 1];
